@@ -1,0 +1,33 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ps__button_flat_digg"
+    android:orientation="vertical">
+
+    <fragment
+        android:id="@+id/top_screen_fragment"
+        android:name="com.bmustapha.currencycalculator.fragments.ScreenFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:layout="@layout/fragment_screen"/>
+
+    <fragment
+        android:id="@+id/spinners_fragment"
+        android:name="com.bmustapha.currencycalculator.fragments.SpinnersFragment"
+        tools:layout="@layout/fragment_spinners"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"/>
+
+    <fragment
+        android:id="@+id/keypad_fragment"
+        android:name="com.bmustapha.currencycalculator.fragments.KeypadFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        tools:layout="@layout/fragment_keypad"/>
+
+</LinearLayout>
