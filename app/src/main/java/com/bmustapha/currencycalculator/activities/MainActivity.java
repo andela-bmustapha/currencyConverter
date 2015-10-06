@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
     public void performCalculation() {
         try {
             calculatorBrain.performCalculation();
+            screenFragment.setHistory(calculatorBrain.getHistory());
             screenFragment.displayNumber(formatter.format(calculatorBrain.getAnswer()));
             calculatorBrain.reset();
         } catch (Exception e) {
@@ -103,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
     @Override
     public void setOperator(String operator) {
         calculatorBrain.setOperator(operator);
+        screenFragment.setHistory(calculatorBrain.getHistory());
     }
 
     @Override

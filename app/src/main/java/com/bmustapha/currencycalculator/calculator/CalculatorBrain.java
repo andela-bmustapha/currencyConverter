@@ -86,6 +86,14 @@ public class CalculatorBrain {
         return secondValue;
     }
 
+    public String getHistory() {
+        if (secondValue == null || secondValue.equals("0")) {
+            return firstValueCurrency + " " + firstValue + " " + operator;
+        } else {
+            return " " + secondValueCurrency + " " + secondValue;
+        }
+    }
+
     public void setOperator(String operator) {
         if (Double.parseDouble(firstValue) > 0) {
             this.firstValueCurrency = baseCurrency;

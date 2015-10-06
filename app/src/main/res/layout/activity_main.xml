@@ -11,7 +11,7 @@
         android:name="com.bmustapha.currencycalculator.fragments.ScreenFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8"
+        android:layout_weight="1"
         tools:layout="@layout/fragment_screen"/>
 
     <fragment
