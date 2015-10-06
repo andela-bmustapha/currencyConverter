@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
             calculatorBrain.performCalculation();
             screenFragment.setHistory(calculatorBrain.getHistory());
             screenFragment.displayNumber(formatter.format(calculatorBrain.getAnswer()));
-            calculatorBrain.reset();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -128,6 +128,8 @@ public class CalculatorBrain {
                 divide();
                 break;
         }
+        firstValue = secondValue;
+        secondValue = "0";
     }
 
     private void convertNumbers() {
