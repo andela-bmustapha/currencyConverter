@@ -11,6 +11,12 @@
                 android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
+        android:id="@+id/history_screen"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
         android:id="@+id/bottom_screen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,6 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:layout_alignParentStart="true">
 
@@ -41,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#004D40"
-            android:textSize="17sp"/>
+            android:textSize="15sp"/>
 
 
     </LinearLayout>

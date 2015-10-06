@@ -14,6 +14,7 @@ public class ScreenFragment extends Fragment {
 
     private TextView currentComputationScreen;
     private TextView targetCurrencyScreen;
+    private TextView historyScreen;
 
     public ScreenFragment() {
     }
@@ -25,6 +26,7 @@ public class ScreenFragment extends Fragment {
 
         targetCurrencyScreen = (TextView) view.findViewById(R.id.target_currency_screen);
         currentComputationScreen = (TextView) view.findViewById(R.id.bottom_screen);
+        historyScreen = (TextView) view.findViewById(R.id.history_screen);
 
         return view;
     }
@@ -39,5 +41,6 @@ public class ScreenFragment extends Fragment {
 
     public void reset() {
         currentComputationScreen.setText("0");
+        historyScreen.setText("");
     }
 }
