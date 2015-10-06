@@ -12,7 +12,9 @@ import com.bmustapha.currencycalculator.R;
 
 public class ScreenFragment extends Fragment {
 
-    private TextView bottomScreen;
+    private TextView currentComputationScreen;
+    private TextView historyScreen;
+    private TextView targetCurrencyScreen;
 
     public ScreenFragment() {
     }
@@ -21,13 +23,23 @@ public class ScreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_screen, container, false);
 
-        bottomScreen = (TextView) view.findViewById(R.id.bottom_screen);
-        bottomScreen.setText("0");
+        historyScreen = (TextView) view.findViewById(R.id.top_screen);
+        targetCurrencyScreen = (TextView) view.findViewById(R.id.target_currency_screen);
+        currentComputationScreen = (TextView) view.findViewById(R.id.bottom_screen);
 
         return view;
     }
 
     public void displayNumber(String currentValue) {
-        bottomScreen.setText(currentValue);
+        currentComputationScreen.setText(currentValue);
+    }
+
+    public void setTargetCurrencyScreen(String currency) {
+        targetCurrencyScreen.setText(currency);
+    }
+
+    public void setHistory(String entry) {
+        String currentHistory = historyScreen.getText().toString();
+        historyScreen.setText(currentHistory + " " + entry);
     }
 }

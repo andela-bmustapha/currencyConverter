@@ -114,5 +114,6 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
     @Override
     public void setTargetCurrency(String targetCurrency) {
         calculatorBrain.setTargetCurrency(targetCurrency);
+        screenFragment.setTargetCurrencyScreen(targetCurrency);
     }
 }
