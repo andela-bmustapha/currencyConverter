@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -30,6 +31,7 @@ public class ExchangeRateHelper {
     public static JSONObject ratesObject;
     public static List<CurrencyRate> topCurrenciesRates = new ArrayList<>();
     public static ArrayList<String> list;
+    public static DecimalFormat formatter = new DecimalFormat("#0.00000");
 
     public static void createTopCurrenciesRate() {
         Iterator<String> iterator = ExchangeRateHelper.ratesObject.keys();

@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bmustapha.currencycalculator.R;
+import com.bmustapha.currencycalculator.helpers.ExchangeRateHelper;
 import com.bmustapha.currencycalculator.models.CurrencyRate;
 
 import java.util.ArrayList;
@@ -67,15 +68,8 @@ public class TopConversionRatesAdapter extends BaseAdapter {
 
         CurrencyRate currencyRate = list.get(position);
         holder.currencyName.setText(currencyRate.getCurrencyName());
-        holder.currencyValue.setText(String.valueOf(currencyRate.getCurrencyRate()));
+        holder.currencyValue.setText(String.valueOf(ExchangeRateHelper.formatter.format(currencyRate.getCurrencyRate())));
 
         return convertView;
-    }
-
-    private double getConvertedRate(double rate) {
-        double newRate = 0;
-
-
-        return newRate;
     }
 }

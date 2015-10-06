@@ -17,7 +17,7 @@
         android:layout_weight="1">
 
         <TextView
-            android:text="Top 10 conversion rates: Dollar Based!"
+            android:text="Top 10 conversion rates: Dollar Based"
             android:layout_width="match_parent"
             android:textColor="#000000"
             android:textAppearance="?android:attr/textAppearanceMedium"
