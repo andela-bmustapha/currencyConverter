@@ -11,14 +11,6 @@
                 android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
-        android:id="@+id/top_screen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#009688"
-        android:text=" "
-        android:textSize="18sp"/>
-
-    <TextView
         android:id="@+id/bottom_screen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

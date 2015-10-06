@@ -1,7 +1,5 @@
 package com.bmustapha.currencycalculator.calculator;
 
-import android.content.Context;
-
 import com.bmustapha.currencycalculator.helpers.ExchangeRateHelper;
 
 /**
@@ -23,7 +21,7 @@ public class CalculatorBrain {
     private final String DECIMAL_POINT = ".";
 
 
-    public CalculatorBrain(Context context) {
+    public CalculatorBrain() {
 
     }
 
@@ -70,13 +68,6 @@ public class CalculatorBrain {
             // remove last character of first value
             firstValue = (firstValue.substring(0, firstValue.length() - 1).equals("")) ? "0" : firstValue.substring(0, firstValue.length() - 1);
         }
-    }
-
-    public String getHistory(boolean flag) {
-        if (firstValue.equals("0")) {
-            return "";
-        }
-        return (flag) ? firstValueCurrency + firstValue + " " + operator : secondValueCurrency + secondValue;
     }
 
     public void reset() {

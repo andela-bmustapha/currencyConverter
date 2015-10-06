@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
 
         // get instance of the screen fragment
         screenFragment = (ScreenFragment) getSupportFragmentManager().findFragmentById(R.id.top_screen_fragment);
-        calculatorBrain = new CalculatorBrain(this);
+        calculatorBrain = new CalculatorBrain();
     }
 
 
@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
     public void performCalculation() {
         try {
             calculatorBrain.performCalculation();
-            screenFragment.setHistory(calculatorBrain.getHistory(false));
             screenFragment.displayNumber(formatter.format(calculatorBrain.getAnswer()));
             calculatorBrain.reset();
         } catch (Exception e) {
@@ -104,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
     @Override
     public void setOperator(String operator) {
         calculatorBrain.setOperator(operator);
-        screenFragment.setHistory(calculatorBrain.getHistory(true));
     }
 
     @Override
