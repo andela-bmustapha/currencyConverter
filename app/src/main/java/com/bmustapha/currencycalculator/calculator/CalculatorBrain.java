@@ -128,7 +128,10 @@ public class CalculatorBrain {
                 divide();
                 break;
         }
-        firstValue = secondValue;
+    }
+
+    public void updateValues() {
+        firstValue = String.valueOf(answer);
         secondValue = "0";
     }
 
