@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
     @Override
     public void clearInput() {
         calculatorBrain.reset();
-        screenFragment.displayNumber(calculatorBrain.getCurrentValue());
+        screenFragment.reset();
     }
 
     @Override
@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
     public void performCalculation() {
         try {
             calculatorBrain.performCalculation();
+            screenFragment.setHistory(calculatorBrain.getHistory(false));
             screenFragment.displayNumber(formatter.format(calculatorBrain.getAnswer()));
             calculatorBrain.reset();
         } catch (Exception e) {
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
     @Override
     public void setOperator(String operator) {
         calculatorBrain.setOperator(operator);
-        screenFragment.displayNumber(calculatorBrain.getCurrentValue());
+        screenFragment.setHistory(calculatorBrain.getHistory(true));
     }
 
     @Override

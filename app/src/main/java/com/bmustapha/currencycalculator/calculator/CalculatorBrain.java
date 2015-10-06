@@ -9,7 +9,6 @@ import com.bmustapha.currencycalculator.helpers.ExchangeRateHelper;
  */
 public class CalculatorBrain {
 
-    private final Context context;
     private String firstValue = "0";
     private String secondValue = "0";
     private Double answer;
@@ -21,69 +20,63 @@ public class CalculatorBrain {
     private String baseCurrency;
     private double firstValueInDollar;
     private double secondValueInDollar;
+    private final String DECIMAL_POINT = ".";
 
 
     public CalculatorBrain(Context context) {
-        this.context = context;
+
     }
 
-
     public void setValue(String value) {
-        if (operator == null) {
-            isFirst = true;
-            // first value is not set yet
-            if (value.equals("0") && firstValue.equals("0")) {
-                firstValue = value;
-            } else if (value.equals(".")) {
-                if (!firstValue.contains(".") && firstValue.equals("0")) {
-                    firstValue = "0" + value;
-                } else if (!firstValue.contains(".") && !firstValue.equals("0")){
-                    firstValue += value;
-                }
-            } else {
-                if (firstValue.equals("0")) {
-                    firstValue = value;
-                } else {
-                    firstValue += value;
-                }
-            }
+        if (operator != null) {
+            setSecondValue(value);
         } else {
-            isFirst = false;
-            // set second value
-            if (value.equals("0") && secondValue.equals("0")) {
-                secondValue = value;
-            } else if (value.equals(".")) {
-                if (!secondValue.contains(".") && secondValue.equals("0")) {
-                    secondValue = "0" + value;
-                } else if (!secondValue.contains(".") && !secondValue.equals("0")){
-                    secondValue += value;
-                }
-            } else {
-                if (secondValue.equals("0")) {
-                    secondValue = value;
-                } else {
-                    secondValue += value;
-                }
-            }
+            setFirstValue(value);
         }
+    }
+
+    private void setFirstValue(String value) {
+        firstValue = getFormattedValue(firstValue, value);
+    }
+
+    private void setSecondValue(String value) {
+        secondValue = getFormattedValue(secondValue, value);
+    }
+
+    private String getFormattedValue(String initialValue, String value) {
+        String returnValue;
+        if (initialValue == null || initialValue.equals("0")) {
+            returnValue = isDecimal(value) ? "0." : value;
+        } else {
+            // check if incoming value is decimal and handle it
+            returnValue = isDecimal(value) ? handleDecimal(initialValue) : initialValue + value;
+        }
+        return returnValue;
+    }
+
+    private boolean isDecimal(String value) {
+        return value.equals(DECIMAL_POINT);
+    }
+
+    private String handleDecimal(String initialValue) {
+        return (initialValue.contains(DECIMAL_POINT)) ? initialValue : initialValue + DECIMAL_POINT;
     }
 
     public void removeLast() {
-        if (isFirst) {
-            if (!firstValue.equals("")) {
-                firstValue = firstValue.substring(0, firstValue.length() - 1);
-                if (firstValue.equals("")) {
-                    firstValue = "0";
-                }
-            }
+        if (operator != null) {
+            // remove last character of second value
+            secondValue = (secondValue.substring(0, secondValue.length() - 1).equals("")) ? "0" : secondValue.substring(0, secondValue.length() - 1);
         } else {
-            if (!secondValue.equals("")) {
-                secondValue = secondValue.substring(0, secondValue.length() - 1);
-                if (secondValue.equals("")) {
-                    secondValue = "0";
-                }
-            }
+            // remove last character of first value
+            firstValue = (firstValue.substring(0, firstValue.length() - 1).equals("")) ? "0" : firstValue.substring(0, firstValue.length() - 1);
         }
+    }
+
+    public String getHistory(boolean flag) {
+        if (firstValue.equals("0")) {
+            return "";
+        }
+        return (flag) ? firstValueCurrency + firstValue + " " + operator : secondValueCurrency + secondValue;
     }
 
     public void reset() {
@@ -177,9 +170,5 @@ public class CalculatorBrain {
 
     public void setTargetCurrency(String targetCurrency) {
         this.targetCurrency = targetCurrency;
-    }
-
-    public String getTargetCurrency() {
-        return targetCurrency;
     }
 }

@@ -40,6 +40,11 @@ public class ScreenFragment extends Fragment {
 
     public void setHistory(String entry) {
         String currentHistory = historyScreen.getText().toString();
-        historyScreen.setText(currentHistory + " " + entry);
+        historyScreen.setText(currentHistory.trim() + " " + entry);
+    }
+
+    public void reset() {
+        historyScreen.setText("");
+        currentComputationScreen.setText("0");
     }
 }
