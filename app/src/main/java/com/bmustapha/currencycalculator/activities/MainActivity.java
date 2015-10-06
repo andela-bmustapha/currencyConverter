@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import com.bmustapha.currencycalculator.R;
 import com.bmustapha.currencycalculator.calculator.CalculatorBrain;
 import com.bmustapha.currencycalculator.fragments.ScreenFragment;
+import com.bmustapha.currencycalculator.helpers.InternetChecker;
 import com.bmustapha.currencycalculator.interfaces.KeyPadClicked;
 import com.bmustapha.currencycalculator.interfaces.SpinnerItemSelected;
 
@@ -26,6 +27,14 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // check for internet connect and exit if no internet connection is found
+        if (!InternetChecker.internetConnectionAvailable(this)) {
+            // change activity to no internet activity
+            Intent noInternetIntent = new Intent(this, NoInternetActivity.class);
+            startActivity(noInternetIntent);
+            finish();
+        }
 
         // get instance of the screen fragment
         screenFragment = (ScreenFragment) getSupportFragmentManager().findFragmentById(R.id.top_screen_fragment);
