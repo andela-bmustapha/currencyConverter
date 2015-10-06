@@ -13,7 +13,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         super(MainActivity.class);
     }
 
-    // test if activity exists
+
     //test to see if activity exists
     public void testActivityExists() {
         MainActivity activity = getActivity();
