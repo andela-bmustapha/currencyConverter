@@ -16,8 +16,9 @@ public class CalculatorBrain {
     private String targetCurrency;
     private boolean isFirst = true;
     private String baseCurrency;
-    private double firstValueInDollar;
-    private double secondValueInDollar;
+
+    private double firstValueConverted;
+    private double secondValueConverted;
     private final String DECIMAL_POINT = ".";
 
 
@@ -75,8 +76,8 @@ public class CalculatorBrain {
         secondValue = "0";
         operator = null;
         isFirst = true;
-        firstValueInDollar = 0;
-        secondValueInDollar = 0;
+        firstValueConverted = 0;
+        secondValueConverted = 0;
     }
 
     public String getCurrentValue() {
@@ -136,36 +137,28 @@ public class CalculatorBrain {
     }
 
     private void convertNumbers() {
-       firstValueInDollar = ExchangeRateHelper.getDollarEquivalent(Double.parseDouble(firstValue), firstValueCurrency);
-       secondValueInDollar = ExchangeRateHelper.getDollarEquivalent(Double.parseDouble(secondValue), secondValueCurrency);
-    }
-
-    private double getTargetAmount(double dollar) {
-        return ExchangeRateHelper.getTargetCurrencyEquivalent(dollar, targetCurrency);
+        firstValueConverted = ExchangeRateHelper.getConvertedValue(Double.parseDouble(firstValue), firstValueCurrency, targetCurrency);
+        secondValueConverted = ExchangeRateHelper.getConvertedValue(Double.parseDouble(secondValue), secondValueCurrency, targetCurrency);
     }
 
     private void divide() {
         convertNumbers();
-        double answerInDollar = firstValueInDollar / secondValueInDollar;
-        answer = getTargetAmount(answerInDollar);
+        answer = firstValueConverted / secondValueConverted;
     }
 
     private void multiply() {
         convertNumbers();
-        double answerInDollar = firstValueInDollar * secondValueInDollar;
-        answer = getTargetAmount(answerInDollar);
+        answer = firstValueConverted * secondValueConverted;
     }
 
     private void subtract() {
         convertNumbers();
-        double answerInDollar = firstValueInDollar - secondValueInDollar;
-        answer = getTargetAmount(answerInDollar);
+        answer = firstValueConverted - secondValueConverted;
     }
 
     private void add() {
         convertNumbers();
-        double answerInDollar = firstValueInDollar + secondValueInDollar;
-        answer = getTargetAmount(answerInDollar);
+        answer = firstValueConverted + secondValueConverted;
     }
 
     public void setBaseCurrency(String baseCurrency) {

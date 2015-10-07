@@ -106,23 +106,15 @@ public class ExchangeRateHelper {
         return String.valueOf(stringBuilder);
     }
 
-    public static double getDollarEquivalent(double number, String currency) {
-        double dollarEquivalent = 0;
+    public static double getConvertedValue(double number, String baseCurrency, String targetCurrency) {
+        double finalValue = 0;
         try {
-            dollarEquivalent = number / ratesObject.getDouble(currency);
+            double baseCurrencyValue = ratesObject.getDouble(baseCurrency);
+            double targetCurrencyValue = ratesObject.getDouble(targetCurrency);
+            finalValue = (number * targetCurrencyValue) / baseCurrencyValue;
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return dollarEquivalent;
-    }
-
-    public static double getTargetCurrencyEquivalent(double dollar, String currency) {
-        double finalAmount = 0;
-        try {
-            finalAmount = dollar * ratesObject.getDouble(currency);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return finalAmount;
+        return finalValue;
     }
 }
