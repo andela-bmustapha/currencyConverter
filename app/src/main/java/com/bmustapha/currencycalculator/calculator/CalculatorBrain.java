@@ -115,6 +115,7 @@ public class CalculatorBrain {
     }
 
     private void calculate() {
+        convertNumbers();
         switch (operator) {
             case "+":
                 add();
@@ -142,22 +143,18 @@ public class CalculatorBrain {
     }
 
     private void divide() {
-        convertNumbers();
         answer = firstValueConverted / secondValueConverted;
     }
 
     private void multiply() {
-        convertNumbers();
         answer = firstValueConverted * secondValueConverted;
     }
 
     private void subtract() {
-        convertNumbers();
         answer = firstValueConverted - secondValueConverted;
     }
 
     private void add() {
-        convertNumbers();
         answer = firstValueConverted + secondValueConverted;
     }
 
