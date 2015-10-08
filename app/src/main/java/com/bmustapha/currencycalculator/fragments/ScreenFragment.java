@@ -32,7 +32,11 @@ public class ScreenFragment extends Fragment {
     }
 
     public void displayNumber(String currentValue) {
-        currentComputationScreen.setText(currentValue);
+        if (currentValue != null) {
+            currentComputationScreen.setText(currentValue);
+        } else {
+            currentComputationScreen.setText("0");
+        }
     }
 
     public void setTargetCurrencyScreen(String currency) {
