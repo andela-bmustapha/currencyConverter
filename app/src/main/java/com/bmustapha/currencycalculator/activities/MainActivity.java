@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.bmustapha.currencycalculator.R;
 import com.bmustapha.currencycalculator.calculator.CalculatorBrain;
 import com.bmustapha.currencycalculator.fragments.ScreenFragment;
+import com.bmustapha.currencycalculator.helpers.ExchangeRateHelper;
 import com.bmustapha.currencycalculator.helpers.InternetChecker;
 import com.bmustapha.currencycalculator.interfaces.KeyPadClicked;
 import com.bmustapha.currencycalculator.interfaces.SpinnerItemSelected;
@@ -59,16 +61,18 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
             case R.id.action_top_conversion:
                 showTopConversionRates();
                 break;
-            case R.id.action_settings:
-                return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     private void showTopConversionRates() {
-        Intent topRatesIntent = new Intent(this, TopConversionActivity.class);
-        startActivity(topRatesIntent);
+        if (ExchangeRateHelper.ratesObject != null) {
+            Intent topRatesIntent = new Intent(this, TopConversionActivity.class);
+            startActivity(topRatesIntent);
+        } else {
+            Toast.makeText(this, "Rates unavailable!", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -91,6 +95,10 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
 
     @Override
     public void performCalculation() {
+        calculate();
+    }
+
+    private void calculate() {
         try {
             calculatorBrain.performCalculation();
             screenFragment.setHistory(calculatorBrain.getHistory());
@@ -104,8 +112,15 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
 
     @Override
     public void setOperator(String operator) {
-        calculatorBrain.setOperator(operator);
-        screenFragment.setHistory(calculatorBrain.getHistory());
+        // check if both operands are set and perform calculation if true
+        if (calculatorBrain.operandsSet()) {
+            calculate();
+            calculatorBrain.setOperator(operator);
+            screenFragment.setHistory(calculatorBrain.getHistory());
+        } else {
+            calculatorBrain.setOperator(operator);
+            screenFragment.setHistory(calculatorBrain.getHistory());
+        }
     }
 
     @Override

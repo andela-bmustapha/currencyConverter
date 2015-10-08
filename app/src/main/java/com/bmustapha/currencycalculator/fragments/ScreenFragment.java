@@ -40,11 +40,13 @@ public class ScreenFragment extends Fragment {
     }
 
     public void setHistory(String value) {
-        if (containsOperator(value)) {
-            // replace entire text
-            historyScreen.setText(value);
-        } else {
-            historyScreen.append(value);
+        if (!value.contains("null")) {
+            if (containsOperator(value)) {
+                // replace entire text
+                historyScreen.setText(value);
+            } else {
+                historyScreen.append(value);
+            }
         }
     }
 

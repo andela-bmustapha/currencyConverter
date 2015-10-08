@@ -7,8 +7,8 @@ import com.bmustapha.currencycalculator.helpers.ExchangeRateHelper;
  */
 public class CalculatorBrain {
 
-    private String firstValue = "0";
-    private String secondValue = "0";
+    private String firstValue;
+    private String secondValue;
     private Double answer;
     private String operator;
     private String firstValueCurrency;
@@ -17,9 +17,10 @@ public class CalculatorBrain {
     private boolean isFirst = true;
     private String baseCurrency;
 
-    private double firstValueConverted;
-    private double secondValueConverted;
+    private Double firstValueConverted;
+    private Double secondValueConverted;
     private final String DECIMAL_POINT = ".";
+
 
 
     public CalculatorBrain() {
@@ -62,22 +63,29 @@ public class CalculatorBrain {
     }
 
     public void removeLast() {
-        if (operator != null) {
-            // remove last character of second value
-            secondValue = (secondValue.substring(0, secondValue.length() - 1).equals("")) ? "0" : secondValue.substring(0, secondValue.length() - 1);
-        } else {
-            // remove last character of first value
-            firstValue = (firstValue.substring(0, firstValue.length() - 1).equals("")) ? "0" : firstValue.substring(0, firstValue.length() - 1);
+        try {
+            if (operator != null) {
+                // remove last character of second value
+                secondValue = (secondValue.substring(0, secondValue.length() - 1).equals("")) ? "0" : secondValue.substring(0, secondValue.length() - 1);
+            } else {
+                // remove last character of first value
+                firstValue = (firstValue.substring(0, firstValue.length() - 1).equals("")) ? "0" : firstValue.substring(0, firstValue.length() - 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     public void reset() {
-        firstValue = "0";
-        secondValue = "0";
+
+        firstValue = null;
+        secondValue = null;
+        answer = null;
         operator = null;
         isFirst = true;
-        firstValueConverted = 0;
-        secondValueConverted = 0;
+        firstValueConverted = null;
+        secondValueConverted = null;
     }
 
     public String getCurrentValue() {
@@ -96,10 +104,14 @@ public class CalculatorBrain {
     }
 
     public void setOperator(String operator) {
-        if (Double.parseDouble(firstValue) > 0) {
-            this.firstValueCurrency = baseCurrency;
-            this.operator = operator;
-            isFirst = false;
+        try {
+            if (Double.parseDouble(firstValue) > 0) {
+                this.firstValueCurrency = baseCurrency;
+                this.operator = operator;
+                isFirst = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -140,6 +152,10 @@ public class CalculatorBrain {
     private void convertNumbers() {
         firstValueConverted = ExchangeRateHelper.getConvertedValue(Double.parseDouble(firstValue), firstValueCurrency, targetCurrency);
         secondValueConverted = ExchangeRateHelper.getConvertedValue(Double.parseDouble(secondValue), secondValueCurrency, targetCurrency);
+    }
+
+    public boolean operandsSet() {
+        return firstValue != null && secondValue != null;
     }
 
     private void divide() {
