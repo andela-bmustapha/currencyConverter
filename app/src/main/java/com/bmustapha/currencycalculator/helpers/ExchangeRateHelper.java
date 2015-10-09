@@ -3,20 +3,13 @@ package com.bmustapha.currencycalculator.helpers;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.bmustapha.currencycalculator.config.Constants;
 import com.bmustapha.currencycalculator.interfaces.RatesFetchValidator;
 import com.bmustapha.currencycalculator.models.CurrencyRate;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -27,11 +20,8 @@ import java.util.List;
  */
 public class ExchangeRateHelper {
 
-    private static final String URL = "https://openexchangerates.org/api/latest.json?app_id=48b5ac7dd61f4794b76d8d9a0cdfbff9";
-    public static JSONObject ratesObject;
-    public static List<CurrencyRate> topCurrenciesRates = new ArrayList<>();
-    public static ArrayList<String> list;
-    public static DecimalFormat formatter = new DecimalFormat("#0.00000");
+    private static JSONObject ratesObject;
+    private static List<CurrencyRate> topCurrenciesRates = new ArrayList<>();
 
     public static void createTopCurrenciesRate() {
         Iterator<String> iterator = ExchangeRateHelper.ratesObject.keys();
@@ -48,9 +38,20 @@ public class ExchangeRateHelper {
         Collections.sort(topCurrenciesRates);
     }
 
+    public static List<CurrencyRate> getTopCurrenciesRates() {
+        return topCurrenciesRates;
+    }
+
+    public static JSONObject getRates() {
+        return ratesObject;
+    }
+
     public static void getExchangeRates(RatesFetchValidator ratesFetchValidator) {
-        Log.e("Testing: ", "Reached!");
         new ExchangeRateFetcher().execute(ratesFetchValidator);
+    }
+
+    public static boolean isRateSet() {
+        return ratesObject != null;
     }
 
     private static class ExchangeRateFetcher extends AsyncTask<RatesFetchValidator, Void, RatesFetchValidator> {
@@ -60,7 +61,7 @@ public class ExchangeRateHelper {
         @Override
         protected RatesFetchValidator doInBackground(RatesFetchValidator... ratesFetchValidators) {
             Log.e("Testing: ", "Do in background...!");
-            finalString = getJsonString(URL);
+            finalString = RatesFetcher.getJsonString(Constants.URL);
             return ratesFetchValidators[0];
         }
 
@@ -76,45 +77,5 @@ public class ExchangeRateHelper {
                 e.printStackTrace();
             }
         }
-    }
-
-    private static String getJsonString(String stringUrl) {
-        StringBuilder stringBuilder = new StringBuilder();
-        BufferedReader bufferedReader = null;
-        try {
-
-            URL url = new URL(stringUrl);
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            InputStream inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
-            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line = "";
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return String.valueOf(stringBuilder);
-    }
-
-    public static double getConvertedValue(double number, String baseCurrency, String targetCurrency) {
-        double finalValue = 0;
-        try {
-            double baseCurrencyValue = ratesObject.getDouble(baseCurrency);
-            double targetCurrencyValue = ratesObject.getDouble(targetCurrency);
-            finalValue = (number * targetCurrencyValue) / baseCurrencyValue;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return finalValue;
     }
 }

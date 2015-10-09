@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
     }
 
     private void showTopConversionRates() {
-        if (ExchangeRateHelper.ratesObject != null) {
+        if (ExchangeRateHelper.isRateSet()) {
             Intent topRatesIntent = new Intent(this, TopConversionActivity.class);
             startActivity(topRatesIntent);
         } else {

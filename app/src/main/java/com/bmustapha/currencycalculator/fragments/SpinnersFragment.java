@@ -24,10 +24,12 @@ import java.util.Iterator;
  */
 public class SpinnersFragment extends Fragment {
 
-    SpinnerItemSelected spinnerInterface;
-    ArrayAdapter<String> adapter;
-    Spinner targetCurrencySpinner;
-    Spinner baseCurrencySpinner;
+    private SpinnerItemSelected spinnerInterface;
+    private ArrayAdapter<String> adapter;
+    private Spinner targetCurrencySpinner;
+    private Spinner baseCurrencySpinner;
+
+    private ArrayList<String> list;
 
     public SpinnersFragment() {
 
@@ -42,8 +44,8 @@ public class SpinnersFragment extends Fragment {
 
         // baseCurrencySpinner.setDropDownViewResource(R.layout.spinner_dropdown_style);
 
-        if (ExchangeRateHelper.list == null) {
-            ExchangeRateHelper.list = new ArrayList<String>();
+        if (list == null) {
+            list = new ArrayList<>();
             getExchangeRates();
         } else {
             setAdapters();
@@ -65,18 +67,18 @@ public class SpinnersFragment extends Fragment {
     }
 
     private void populateSpinners() {
-        Iterator<String> iterator = ExchangeRateHelper.ratesObject.keys();
+        Iterator<String> iterator = ExchangeRateHelper.getRates().keys();
         while (iterator.hasNext()) {
             String key = iterator.next();
-            ExchangeRateHelper.list.add(key);
+            list.add(key);
         }
         // sort the items in the list
-        Collections.sort(ExchangeRateHelper.list);
+        Collections.sort(list);
         setAdapters();
     }
 
     private void setAdapters() {
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, ExchangeRateHelper.list);
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list);
         baseCurrencySpinner.setAdapter(adapter);
         targetCurrencySpinner.setAdapter(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

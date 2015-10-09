@@ -2,6 +2,8 @@ package com.bmustapha.currencycalculator.calculator;
 
 import com.bmustapha.currencycalculator.helpers.ExchangeRateHelper;
 
+import org.json.JSONException;
+
 /**
  * Created by tunde on 9/28/15.
  */
@@ -150,8 +152,20 @@ public class CalculatorBrain {
     }
 
     private void convertNumbers() {
-        firstValueConverted = ExchangeRateHelper.getConvertedValue(Double.parseDouble(firstValue), firstValueCurrency, targetCurrency);
-        secondValueConverted = ExchangeRateHelper.getConvertedValue(Double.parseDouble(secondValue), secondValueCurrency, targetCurrency);
+        firstValueConverted = getConvertedValue(Double.parseDouble(firstValue), firstValueCurrency, targetCurrency);
+        secondValueConverted = getConvertedValue(Double.parseDouble(secondValue), secondValueCurrency, targetCurrency);
+    }
+
+    private double getConvertedValue(double number, String baseCurrency, String targetCurrency) {
+        double finalValue = 0;
+        try {
+            double baseCurrencyValue = ExchangeRateHelper.getRates().getDouble(baseCurrency);
+            double targetCurrencyValue = ExchangeRateHelper.getRates().getDouble(targetCurrency);
+            finalValue = (number * targetCurrencyValue) / baseCurrencyValue;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return finalValue;
     }
 
     public boolean operandsSet() {

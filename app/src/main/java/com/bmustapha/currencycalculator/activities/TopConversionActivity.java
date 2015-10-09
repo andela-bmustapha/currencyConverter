@@ -36,7 +36,7 @@ public class TopConversionActivity extends AppCompatActivity {
         int count = 0;
         topList = new ArrayList<>();
         while (count < 10) {
-            topList.add(ExchangeRateHelper.topCurrenciesRates.get(count));
+            topList.add(ExchangeRateHelper.getTopCurrenciesRates().get(count));
             count++;
         }
     }
