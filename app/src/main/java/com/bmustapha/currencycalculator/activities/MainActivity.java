@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
 
     @Override
     public void sendValue(String value) {
-        calculatorBrain.setValue(value);
+        calculatorBrain.setEnteredValue(value);
         screenFragment.displayNumber(calculatorBrain.getCurrentValue());
     }
 
@@ -96,15 +96,12 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
     @Override
     public void performCalculation() {
         calculate();
+        screenFragment.setHistory(calculatorBrain.getHistory());
     }
 
     private void calculate() {
         try {
-            calculatorBrain.performCalculation();
-            screenFragment.setHistory(calculatorBrain.getHistory());
-            screenFragment.displayNumber(formatter.format(calculatorBrain.getAnswer()));
-            calculatorBrain.updateValues();
-            // calculatorBrain.reset();
+            screenFragment.displayNumber(formatter.format(calculatorBrain.performCalculation()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,14 +110,8 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
     @Override
     public void setOperator(String operator) {
         // check if both operands are set and perform calculation if true
-        if (calculatorBrain.operandsSet()) {
-            calculate();
-            calculatorBrain.setOperator(operator);
-            screenFragment.setHistory(calculatorBrain.getHistory());
-        } else {
-            calculatorBrain.setOperator(operator);
-            screenFragment.setHistory(calculatorBrain.getHistory());
-        }
+        calculatorBrain.setOperator(operator);
+        screenFragment.setHistory(calculatorBrain.getHistory());
     }
 
     @Override
