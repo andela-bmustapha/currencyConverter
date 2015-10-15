@@ -29,6 +29,9 @@ public class CalculatorBrain {
     }
 
     public void setEnteredValue(String value) {
+        if (flag) {
+            reset();
+        }
         enteredValue = getFormattedValue(enteredValue, value);
     }
 
