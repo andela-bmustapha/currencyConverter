@@ -7,7 +7,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 /**
- * Created by andela on 10/15/15.
+ * Created by tunde on 10/15/15.
  */
 public class ExpressionProcessor {
 
@@ -32,7 +32,7 @@ public class ExpressionProcessor {
 
     private Double performCalculations() {
         Double leftOperand = null;
-        Double rightOperand = null;
+        Double rightOperand;
 
         for (int x = 0; x < convertedValues.size(); x++) {
             if (leftOperand == null) {

@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements KeyPadClicked, Sp
     public void performCalculation() {
         calculate();
         screenFragment.setHistory(calculatorBrain.getHistory());
+        calculatorBrain.resetLists();
     }
 
     private void calculate() {

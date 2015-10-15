@@ -1,5 +1,7 @@
 package com.bmustapha.currencycalculator.calculator;
 
+import com.bmustapha.currencycalculator.config.Constants;
+
 import java.util.ArrayList;
 
 /**
@@ -7,10 +9,6 @@ import java.util.ArrayList;
  */
 public class CalculatorBrain {
 
-
-    private Double firstValueConverted;
-
-    private Double secondValueConverted;
     private final String DECIMAL_POINT = ".";
     private ArrayList<Double> operands;
 
@@ -23,11 +21,11 @@ public class CalculatorBrain {
     private String targetCurrency;
     private Double answer;
 
+    private boolean flag = false;
+
 
     public CalculatorBrain() {
-        operands = new ArrayList<>();
-        operators = new ArrayList<>();
-        currencies = new ArrayList<>();
+        resetLists();
     }
 
     public void setEnteredValue(String value) {
@@ -75,9 +73,11 @@ public class CalculatorBrain {
             if (Double.parseDouble(enteredValue) != 0) {
                 operands.add(Double.parseDouble(enteredValue));
                 operators.add(operator);
-                currencies.add(choiceCurrency);
+                String evaluatedOperator = (flag) ? targetCurrency : choiceCurrency;
+                currencies.add(evaluatedOperator);
                 enteredValue = null;
             }
+            flag = false;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,7 +87,7 @@ public class CalculatorBrain {
         String history = "";
         // loop through the currencies arrayList to get build history string
         for (int x = 0; x < currencies.size(); x++) {
-            history += (history.equals("")) ? currencies.get(x) + operands.get(x) : currencies.get(x) + operands.get(x);
+            history += (history.equals("")) ? currencies.get(x) + Constants.SCREEN_FORMATTER.format(operands.get(x)) : " " + currencies.get(x) + Constants.SCREEN_FORMATTER.format(operands.get(x));
             try {
                 history += (operators.get(x) != null) ? " " + operators.get(x) : "";
             } catch (Exception e) {
@@ -100,20 +100,29 @@ public class CalculatorBrain {
     public void reset() {
         enteredValue = null;
         answer = null;
+        resetLists();
+        flag = false;
+    }
+
+    public void resetLists() {
         operands = new ArrayList<>();
         operators = new ArrayList<>();
         currencies = new ArrayList<>();
     }
 
+
     public Double performCalculation() {
         if (enteredValue != null) {
             operands.add(Double.parseDouble(enteredValue));
-            currencies.add(choiceCurrency);
+            String evaluatedOperator = (flag) ? targetCurrency : choiceCurrency;
+            currencies.add(evaluatedOperator);
         }
 
         if (operands.size() >= 2) {
             answer = new ExpressionProcessor(currencies, operands, operators, targetCurrency).calculate();
         }
+        enteredValue = String.valueOf(answer);
+        flag = true;
         return answer;
     }
 
