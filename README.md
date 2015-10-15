@@ -1,0 +1,3 @@
+# currencyConverter
+Simple currency calculator
+
