@@ -44,22 +44,11 @@ public class ScreenFragment extends Fragment {
     }
 
     public void setHistory(String value) {
-        if (!value.contains("null")) {
-            if (containsOperator(value)) {
-                // replace entire text
-                historyScreen.setText(value);
-            } else {
-                historyScreen.append(value);
-            }
-        }
+        historyScreen.setText(value);
     }
 
     public void reset() {
         currentComputationScreen.setText("0");
         historyScreen.setText("");
-    }
-
-    private boolean containsOperator(String value) {
-        return value.contains("+") || value.contains("-") || value.contains("\u00D7") || value.contains("\u00F7");
     }
 }
